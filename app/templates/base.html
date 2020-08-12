@@ -1,0 +1,14 @@
+<html>
+    <head>
+        {% if title %}
+        <title> {{ title }} - Potty List </title>
+        {% else%}
+        <title> Welcome to The Potty List!</title>
+        {% endif %}
+    </head>
+    <body>
+        <div> Potty List: <a href = "/index">Home</a></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
