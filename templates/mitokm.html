@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %}Convert Miles to Kilometers{% endblock %}
+{% block content %}
+<p>Enter a distance in miles and click "submit" to convert to kilometers</p>
+<form action="/mitokm_result">
+Miles:<br>
+<input type="text" name="miTemp" value="1.0">
+<input type="submit" value="Submit">
+</form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block title %}Convert Fahrenheit to Celsius {% endblock%}
+
+{% block content %}
+<p>Enter a temperature in Fahrenheit and click "submit" to convert to Celsius!</p>
+<form action="/ftoc_result">
+Fahrenheit Temp:<br>
+<input type="text" name="fTemp" value="68.0">
+<input type="submit" value="Submit">
+</form>
+{% endblock %}
