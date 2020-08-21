@@ -4,8 +4,8 @@
 
 {% block content %}
 <p>Please upload CSV file here:</p>
-<form action="/pottylist_result">
-<input type="file" id="roster" required="required" accept=".csv"/>
+<form action="/pottylist_result" method="post" enctype="multipart/form-data">
+<input type="file" id="roster" name="roster" required="required" accept=".csv"/>
 <input type="submit" value="Upload!" class="btn"/>
 </form>
 {% endblock %}

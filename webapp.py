@@ -1,4 +1,7 @@
 import os
+import io
+import csv
+import pandas as pd
 from flask import Flask, url_for, render_template, request
 app = Flask(__name__)
 
@@ -11,6 +14,10 @@ def ctof(ctemp):
 
 def mitokm(miles):
     return miles * 5280.0 * 12.0 * 2.54 / 100.0 / 1000.0
+
+def string_of_roster(csv_stream):
+    sol = ''
+
 
 #subsites of main website
 @app.route('/')
@@ -62,9 +69,12 @@ def render_mitokm_result():
     except ValueError:
         return "Sorry, something went wrong."
 
-@app.route('/pottylist_result')
+@app.route('/pottylist_result', methods=['GET','POST'])
 def render_pottylist_result():
-    return render_template('pottylist_result.html')
+    f = request.files["roster"]
+    stream = io.StringIO(f.stream.read().decode("UTF-8"), newline=None)
+    csv_input = csv.reader(stream)
+    return render_template('pottylist_result.html', roster=csv_input)
 
 
 

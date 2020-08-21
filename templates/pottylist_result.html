@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}Potty List {% endblock %}
 {% block content %}
-<p>Still in progress! Check it out later.</p>
+<p>Click on a student's name to log the time, then click on it again when they return!</p>
+<h1>Students</h1>
+<ol>
+    {% for student in roster %}
+    <li><a href=#>{{ student[0] + ", " + student[1] }}</a></li>
+    {% endfor %}
+</ol>
 {% endblock %}
