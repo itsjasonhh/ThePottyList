@@ -5,7 +5,23 @@
 <h1>Students</h1>
 <ol>
     {% for student in roster %}
-    <li><a href=#>{{ student[0] + ", " + student[1] }}</a></li>
+    <li><button id="{{ student[1] + ' ' + student[0] }}" onclick="leave(this.id)"> {{ student[0] + ", " + student[1] }} </button></li>
     {% endfor %}
 </ol>
+<p id='log'></p>
+
+<script>
+    function leave(object_id){
+        var id = object_id;
+        var date = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        document.getElementById('log').innerHTML += "<br>" + id + " left at " + date;
+        document.getElementById(id).onclick = function (){comeback(id)};
+    };
+    function comeback(object_id){
+        var id = object_id;
+        var date = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        document.getElementById('log').innerHTML += "<br>" + id + " returned at " + date;
+        document.getElementById(id).onclick = function (){leave(id)};
+    }
+</script>
 {% endblock %}
