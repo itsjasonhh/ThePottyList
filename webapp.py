@@ -41,6 +41,10 @@ def render_mitokm():
 def render_potty_list():
     return render_template("pottylist.html")
 
+@app.route('/scoutingreport')
+def render_scouting_report():
+    return render_template("scoutingreport.html")
+
 
 @app.route('/ftoc_result')
 def render_ftoc_result():
@@ -75,6 +79,8 @@ def render_pottylist_result():
     stream = io.StringIO(f.stream.read().decode("UTF-8"), newline=None)
     csv_input = csv.reader(stream)
     return render_template('pottylist_result.html', roster=csv_input)
+
+
 
 
 
