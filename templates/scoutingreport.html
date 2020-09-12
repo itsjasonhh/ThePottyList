@@ -3,7 +3,30 @@
 {% block title %} Scouting Report {% endblock %}
 
 {% block content %}
+<style>
+    textarea {
+        width: 500px;
+    }
+    p {
+        margin: 5px;
+    }
+    div {
+        margin: 10px;
+    }
+</style>
+<p>Copy and paste the text from the lobby below! </p>
+<div>For example: <br>
+    <br>Player1 joined the lobby.
+    <br>Player2 joined the lobby.
+    <br>Player3 joined the lobby.
+    <br>Player4 joined the lobby.
+    <br>Player5 joined the lobby.
 
+</div>
+<form>
+    <textarea rows="10" name="lobbynames" placeholder="Paste text here!"></textarea>
+    <input type="submit" value="Submit"
+</form>
 <!-- Goal is to webscrape from op.gg and find useful information to post in one page, just so users don't have to open op.gg for 4 other players -->
 <!-- Website is https://na.op.gg/summoner/userName=ADD USER NAME HERE, need to find how to see ranked only.-->
 {% endblock %}
