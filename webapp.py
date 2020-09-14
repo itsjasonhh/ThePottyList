@@ -6,17 +6,27 @@ from flask import Flask, url_for, render_template, request
 app = Flask(__name__)
 
 #helper functions
+
+#converts Fahrenheit to Celsius
 def ftoc(ftemp):
     return (ftemp - 32.0)*(5.0/9.0)
 
+#converts Celsius to Fahrenheit
 def ctof(ctemp):
     return ctemp*(9.0/5.0) + 32.0
 
+#converts miles to kilometers
 def mitokm(miles):
     return miles * 5280.0 * 12.0 * 2.54 / 100.0 / 1000.0
 
-def string_of_roster(csv_stream):
-    sol = ''
+#takes string of text from LoL client and outputs a list of 5 usernames
+def get_usernames(lobby_text):
+    list_of_lobby = lobby_text.split('\n')
+    usernames = []
+    for sentence in list_of_lobby:
+        usernames.append(sentence.split(' joined the lobby.')[0])
+    return usernames
+
 
 
 #subsites of main website
@@ -42,7 +52,7 @@ def render_potty_list():
     return render_template("pottylist.html")
 
 @app.route('/scoutingreport')
-def render_scouting_report():
+def render_scoutingreport():
     return render_template("scoutingreport.html")
 
 
@@ -80,8 +90,13 @@ def render_pottylist_result():
     csv_input = csv.reader(stream)
     return render_template('pottylist_result.html', roster=csv_input)
 
-
-
+@app.route('/scoutingreport_result')
+def render_scoutingreport_result():
+    try:
+        lobby = str(request.args['lobbynames'])
+        names = get_usernames(lobby)
+    except:
+        return "Sorry, something went wrong."
 
 
 if __name__ == "__main__":
