@@ -94,7 +94,8 @@ def render_pottylist_result():
 def render_scoutingreport_result():
     try:
         lobby = str(request.args['lobbynames'])
-        names = get_usernames(lobby)
+        list_of_names = get_usernames(lobby)
+        return render_template('scoutingreport_result.html', names=list_of_names)
     except:
         return "Sorry, something went wrong."
 

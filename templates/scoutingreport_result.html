@@ -4,4 +4,17 @@
 
 {% block content %}
 
+<ul>
+{% for player in names %}
+<li><a target="_blank" rel="noopener noreferrer" href="{{ 'https://na.op.gg/summoner/userName=' + player | e }}" id="oplink">{{ player | e }}</a> </li>
+{% endfor %}
+</ul>
+
+<script>
+    document.getElementById("oplink").href = "https://na.op.gg/summoner/userName=" + 
+</script>
+
+
 {% endblock %}
+
+
