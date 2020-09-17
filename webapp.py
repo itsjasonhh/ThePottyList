@@ -2,6 +2,8 @@ import os
 import io
 import csv
 import pandas as pd
+import requests
+import bs4
 from flask import Flask, url_for, render_template, request
 app = Flask(__name__)
 
@@ -26,6 +28,22 @@ def get_usernames(lobby_text):
     for sentence in list_of_lobby:
         usernames.append(sentence.split(' joined the lobby.')[0])
     return usernames
+
+#takes a username and returns the u.gg info
+def get_ugg_info(name):
+    res = requests.get('https://u.gg/lol/profile/na1/' + name + '/overview?queueType=ranked_solo_5x5')
+    raw_info = bs4.BeautifulSoup(res.text, 'html.parser')
+    rank, lp = raw_info.find("div", class_='rank-text').text.split('/')
+    wins_games = raw_info.find("div", class_='rank-wins')
+    winrate, games_played = wins_games.text.split(' WR')
+    return rank + ' : ' + lp + ', ' + winrate + ' WR in ' + games_played
+
+#takes a list of names and returns a dictionary of u.gg info
+def scouting(names):
+    list_of_stats = {}
+    for name in names:
+        list_of_stats[name] = get_ugg_info(name)
+    return list_of_stats
 
 
 
@@ -95,7 +113,8 @@ def render_scoutingreport_result():
     try:
         lobby = str(request.args['lobbynames'])
         list_of_names = get_usernames(lobby)
-        return render_template('scoutingreport_result.html', names=list_of_names)
+        scouts = scouting(list_of_names)
+        return render_template('scoutingreport_result.html', names=scouts)
     except:
         return "Sorry, something went wrong."
 

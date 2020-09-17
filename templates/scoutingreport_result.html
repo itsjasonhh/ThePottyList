@@ -7,30 +7,16 @@
 <ul>
 {% for player in names %}
 <li><a target="_blank" rel="noopener noreferrer" href="{{ 'https://u.gg/lol/profile/na1/' + player | e + '/overview?queueType=ranked_solo_5x5' }}" id="ugglink">{{ player | e }}</a> </li>
+<div>{{names[player]}}</div>
 {% endfor %}
 </ul>
 
 {% endblock %}
 
 <!--
-<div class="leagueTier">
-"Silver IV" or whatever rank 
-</div>
-
-<span class="leaguePoints ">
-"57" or whatever amount of LP
-</span>
-
-<span class="winsNumber">
-213 or whatever number of wins
-</span>
-
-<span class="lossesNumber">
-210 or whatever number of losses
-</span>
-
-Use the above 2 calculate total games and win rate
-
-
+    KDA,
+    Champs played,
+    Last 20 games?
 -->
+
 
