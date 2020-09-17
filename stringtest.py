@@ -12,5 +12,10 @@ n0thingtod0 joined the lobby.
 FaYdeePu joined the lobby.
 Gnuxx joined the lobby.'''
 
-print(get_usernames(test))
+#u.gg and op.gg work, league of graphs does not. Gonna use u.gg
+import requests, bs4
+res = requests.get('https://u.gg/lol/profile/na1/senorhuang/overview?queueType=ranked_solo_5x5')
+res.raise_for_status()
+test = bs4.BeautifulSoup(res.text, 'html.parser')
+
 
