@@ -20,20 +20,20 @@
 <div class="column">
 <a target="_blank" rel="noopener noreferrer" href="{{ 'https://u.gg/lol/profile/na1/' + player | e + '/overview?queueType=ranked_solo_5x5' }}" id="ugglink">{{ player | e }}</a>
 <br>
-<p>{{names[player]}}</p>
+<p><strong>Rank: </strong> {{names[player][0]}} </p>
+<br>
+<p><strong>Winrate (overall): </strong> {{names[player][1]}} </p>
+<br>
+<p><strong>Winrate (recent): </strong> {{names[player][2]}}  </p>
+<p><strong>KDA (recent): </strong> {{names[player][3]}} </p>
+<p><strong>Score (recent): </strong> {{names[player][4]}} </p>
 </div>
 {% endfor %}
 
 </div>
 {% endblock %}
 
-<!--
-Need to break apart info to help clarity. Ideally looks like
-<strong> Rank: </strong> Silver 4 57 LP
-<strong> Winrate (overall): </strong> 50% WR in 400 games
-<strong> Winrate (recent): </strong> 30% WR at 2.12 KDA (5.5/5.6/6.3)
-<strong> 1st Most Played: </strong> Viktor, 56% WR at 2.43 KDA
-<strong> 2nd Most Played: </strong> Sylas, 49% WR at 1.90 KDA
+
 
 
 

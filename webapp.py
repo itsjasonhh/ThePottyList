@@ -27,6 +27,8 @@ def get_usernames(lobby_text):
     usernames = []
     for sentence in list_of_lobby:
         usernames.append(sentence.split(' joined the lobby.')[0])
+    if len(usernames) > 5:
+        usernames.pop()
     return usernames
 
 #takes a name and returns a bs4 object that can be searched
@@ -37,26 +39,31 @@ def create_bs(name):
 
 #takes a bs4 object and returns the u.gg rank string
 def get_ugg_rank(bs_object):
-    rank, lp = bs_object.find("div", class_='rank-text').text.split('/')
-    wins_games = bs_object.find("div", class_='rank-wins')
-    winrate, games_played = wins_games.text.split(' WR')
-    return rank + ' : ' + lp + ', ' + winrate + ' WR in ' + games_played
+    ranked_games = bs_object.find("div", class_='rank-text')
+    rank, lp = ranked_games.text.split('/')
+    return rank + ' : ' + lp
 
 #takes a bs4 object and returns the u.gg overall wr
 def get_ugg_overall_wr(bs_object):
-    pass
+    wins_games = bs_object.find("div", class_='rank-wins')
+    winrate, games_played = wins_games.text.split(' WR')
+    return winrate + ' WR in ' + games_played
 
-#takes a bs4 object and returns the u.gg recent wr and KDA
+#takes a bs4 object and returns the u.gg recent wr
 def get_ugg_recent_wr(bs_object):
-    pass
+    recent_winrate = bs_object.find("div", class_='winrate text-1').text
+    return recent_winrate
 
-#takes a bs4 object and returns 1st most played champ, WR, KDA
-def get_ugg_champ1_wr(bs_object):
-    pass
 
-#takes a bs4 object and returns 2nd most played champ, WR, KDA
-def get_ugg_champ2_wr(bs_object):
-    pass
+#takes a bs4 object and returns the u.gg recent kda
+def get_ugg_recent_kda(bs_object):
+    recent_kda_ratio = bs_object.find("div", class_='kda-ratio-text text-1').text
+    return recent_kda_ratio
+
+#takes a bs4 object and returns the u.gg recent scoreline
+def get_ugg_recent_scoreline(bs_object):
+    recent_kda = bs_object.find("div", class_='kda-text text-2').text
+    return recent_kda
 
 #takes a list of names and returns a dictionary of len 5 (one for each username)
 #each key is the name of the player
@@ -69,8 +76,8 @@ def scouting(names):
         payload.append(get_ugg_rank(bs))
         payload.append(get_ugg_overall_wr(bs))
         payload.append(get_ugg_recent_wr(bs))
-        payload.append(get_ugg_champ1_wr(bs))
-        payload.append(get_ugg_champ2_wr(bs))
+        payload.append(get_ugg_recent_kda(bs))
+        payload.append(get_ugg_recent_scoreline(bs))
         report[name] = payload
     return report
 
