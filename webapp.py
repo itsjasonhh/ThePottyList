@@ -29,23 +29,50 @@ def get_usernames(lobby_text):
         usernames.append(sentence.split(' joined the lobby.')[0])
     return usernames
 
-#takes a username and returns the u.gg info
-def get_ugg_info(name):
+#takes a name and returns a bs4 object that can be searched
+def create_bs(name):
     res = requests.get('https://u.gg/lol/profile/na1/' + name + '/overview?queueType=ranked_solo_5x5')
     raw_info = bs4.BeautifulSoup(res.text, 'html.parser')
-    rank, lp = raw_info.find("div", class_='rank-text').text.split('/')
-    wins_games = raw_info.find("div", class_='rank-wins')
+    return raw_info
+
+#takes a bs4 object and returns the u.gg rank string
+def get_ugg_rank(bs_object):
+    rank, lp = bs_object.find("div", class_='rank-text').text.split('/')
+    wins_games = bs_object.find("div", class_='rank-wins')
     winrate, games_played = wins_games.text.split(' WR')
     return rank + ' : ' + lp + ', ' + winrate + ' WR in ' + games_played
 
-#takes a list of names and returns a dictionary of u.gg info
+#takes a bs4 object and returns the u.gg overall wr
+def get_ugg_overall_wr(bs_object):
+    pass
+
+#takes a bs4 object and returns the u.gg recent wr and KDA
+def get_ugg_recent_wr(bs_object):
+    pass
+
+#takes a bs4 object and returns 1st most played champ, WR, KDA
+def get_ugg_champ1_wr(bs_object):
+    pass
+
+#takes a bs4 object and returns 2nd most played champ, WR, KDA
+def get_ugg_champ2_wr(bs_object):
+    pass
+
+#takes a list of names and returns a dictionary of len 5 (one for each username)
+#each key is the name of the player
+#each value is an array of 5 -> [rank_string, WR_string, recent_WR_string, 1st_played_champ_string, 2nd_played_champ_string]
 def scouting(names):
-    list_of_stats = {}
+    report = {}
     for name in names:
-        list_of_stats[name] = get_ugg_info(name)
-    return list_of_stats
-
-
+        bs = create_bs(name)
+        payload = []
+        payload.append(get_ugg_rank(bs))
+        payload.append(get_ugg_overall_wr(bs))
+        payload.append(get_ugg_recent_wr(bs))
+        payload.append(get_ugg_champ1_wr(bs))
+        payload.append(get_ugg_champ2_wr(bs))
+        report[name] = payload
+    return report
 
 #subsites of main website
 @app.route('/')
